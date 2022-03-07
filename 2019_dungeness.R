@@ -2,6 +2,7 @@
 
 library(RODBC)
 library(here)
+library(tidyverse)
 
 channel <- odbcConnectAccess2007(here("Documents","data","pied_piper","2019 Dungeness.accdb"))
 
@@ -12,7 +13,7 @@ df_steelhead <- df[df$WSPEName=="Steelhead smolt H" | df$WSPEName=="Steelhead sm
 
 ggplot(data=df_steelhead, 
        aes(x=StartDate, y=NumCaught, color=  WSPEName, fill = WSPEName)) + 
-  geom_col(alpha = 0.3) + 
+  geom_area(alpha = 0.3) + 
   ylab("Number of fish caught") + xlab("Date") +
   labs(title = "Steelhead smolt 2019 - Hatchery and Wild")
 

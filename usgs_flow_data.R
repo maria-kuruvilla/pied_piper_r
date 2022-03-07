@@ -33,6 +33,7 @@ df_flow$time <- substr(df_flow$date_time,12,16)
 df_flow$tz <- substr(df_flow$date_time,20,22)
 
 df_flow$date <- as.POSIXlt(substr(df_flow$date_time,0,10),format="%m/%d/%Y") 
-df_flow$time <- as.POSIXct(substr(df_flow$date_time,12,16),format="%H:%M") 
+df_flow$time <- format(as.POSIXct(substr(df_flow$date_time,12,16),format="%H:%M"), 
+                       format = "%H:%M:%S")
 
-df_flow$date <- as.POSIXlt(substr(df_flow$date_time,0,10),format="%m/%d/%Y") 
+
