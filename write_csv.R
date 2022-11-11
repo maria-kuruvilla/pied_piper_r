@@ -165,7 +165,36 @@ data_reformat <- function(year, species, age, origin, river, file_type){
 }
 
 data_rename <- function(year, species, age, origin, river, file_type){
-  df_chinook0_h <- data_reformat(year, species, age, origin, river, file_type)
+  new_df_trial <- data_reformat(year, species, age, origin, river, file_type)
+  list_delete = c()
+  count = 0
+  if(length(new_df_trial$StartDate)>1){
+    for(i in 1:(length(new_df_trial$StartDate)-1)){
+      num_caught = new_df_trial$NumCaught[i]
+      fish_per_hour = new_df_trial$fish_per_hour[i]
+      for(j in (i+1):length(new_df_trial$StartDate)){
+        if((new_df_trial$start_datetime[i] == new_df_trial$start_datetime[j])){
+          count = count + 1
+          list_delete= c(list_delete,j)
+          #adding all the numbers of fish caught and fish per hour
+          num_caught = num_caught + new_df_trial$NumCaught[j]
+          fish_per_hour = fish_per_hour + new_df_trial$NumCaught[j]
+          
+          
+          new_df_trial$NumCaught[i] = num_caught
+          new_df_trial$fish_per_hour[i] = fish_per_hour
+        }
+      }
+    }
+  }
+  
+  #print(list_delete)
+  if(length(list_delete)>0){
+    df_chinook0_h <- new_df_trial[-list_delete,]
+  } else {
+    df_chinook0_h <- new_df_trial
+  }
+  
   new_df <- data.frame(chinook0_hatchery_perhour = df_chinook0_h$fish_per_hour,
                        In = df_chinook0_h$In,
                        Down = df_chinook0_h$start_datetime,
@@ -212,7 +241,11 @@ write_csv <- function(year, river, file_type){
       
       
       for(origin in all_origin){
+        print(species)
+        print(age)
+        print(origin)
         if(count == 0){
+          
           new_df <- data_rename(year, species, age, origin, river, file_type)
         }
         else{
