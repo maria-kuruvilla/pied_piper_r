@@ -1,8 +1,6 @@
-#Goal - to write the 2015 MS Access files into csv so that I can 
-# use it in python jupyter notebook.
-# 2015 is in different format from 2016-2020
-
-#editing on Nov 22 to include raw catch numbers and pink and chum numbers
+#Goal - to rewrite the 2016-2020 MS Access files into csv with count data 
+# of all salmonid species (pink chum etc)
+# to use it in python jupyter notebook
 
 
 library(RODBC)
@@ -60,91 +58,16 @@ access_file <- function(file_name){
   odbcClose(channel)
 }
 
-df_2015 <- access_file("different 2015 Dungeness.accdb")
 
-data_reformat_2015 <- function(species, age, origin){
+data_reformat <- function(year, species, age, origin, river, file_type){
   
-  if(species == "Steelhead"){
-    if(origin == "H"){
-      data_filter = 25
-    }
-    else{
-      data_filter = 7
-    }
-  }
-  
-  if(species == "Chinook"){
-    if(origin == "H"){
-      if(age == "0+"){
-        data_filter = 20
-      }
-      else{
-        data_filter = 22
-      }
-    }
-    else{
-      if(age == "0+"){
-        data_filter = 4
-      }
-      else{
-        data_filter = 21
-      }
-    }
-  }
-  
-  if(species == "Coho"){
-    if(origin == "H"){
-      if(age == "0+"){
-        data_filter = 200000
-      }
-      else{
-        data_filter = 23
-      }
-    }
-    else{
-      if(age == "0+"){
-        data_filter = 2
-      }
-      else{
-        data_filter = 1
-      }
-    }
-  }
-  if(species == "Chum"){
-    if(origin == "H"){
-      data_filter = 200000
-    }
-    else{
-      if(age == "1+"){
-        data_filter = 200000
-      }
-      else{
-        data_filter = 3
-      }
-    }
-  }
-  if(species == "Pink"){
-    if(origin == "H"){
-      data_filter = 200000
-    }
-    else{
-      if(age == "1+"){
-        data_filter = 200000
-      }
-      else{
-        data_filter = 5
-      }
-    }
-  }
-  
-  # data_filter = paste(species,age,origin)
-  # file = paste0(river,file_type)
-  # string_year = paste(toString(year),file)
-  # print(string_year)
-  string_year = "different 2015 Dungeness.accdb"
+  data_filter = paste(species,age,origin)
+  file = paste0(river,file_type)
+  string_year = paste(toString(year),file)
+  print(string_year)
   df <- access_file(string_year)
   
-  df_species <- df[((df$SpeciesRunLifeOrigin_Id==data_filter)
+  df_species <- df[((df$WSPEName==data_filter)
                     & df$CaptureType==1 & (df$TrapStatus==1)),]
   
   df_species$start_datetime <- as.POSIXct(paste(df_species$StartDate, 
@@ -165,21 +88,15 @@ data_reformat_2015 <- function(species, age, origin){
   df_species$midpoint <- as.POSIXct(df_species$start_datetime + 
                                       (df_species$end_datetime - df_species$start_datetime)/2)
   
-  if(nrow(df_species)>0){
-    df_species$WSPEName <- paste(species,age,origin)
-  }
-  
   return(df_species)
   
 }
 
-data_rename_2015 <- function(year, species, age, origin, river, file_type){
-  new_df_trial <- data_reformat_2015(species, age, origin)
-  
-  #accounting for various mark types
+data_rename <- function(year, species, age, origin, river, file_type){
+  new_df_trial <- data_reformat(year, species, age, origin, river, file_type)
   list_delete = c()
   count = 0
-  if(length(new_df_trial$StartDate)>0){
+  if(length(new_df_trial$StartDate)>1){
     for(i in 1:(length(new_df_trial$StartDate)-1)){
       num_caught = new_df_trial$NumCaught[i]
       fish_per_hour = new_df_trial$fish_per_hour[i]
@@ -202,8 +119,7 @@ data_rename_2015 <- function(year, species, age, origin, river, file_type){
   #print(list_delete)
   if(length(list_delete)>0){
     df_chinook0_h <- new_df_trial[-list_delete,]
-  }
-  else{
+  } else {
     df_chinook0_h <- new_df_trial
   }
   
@@ -242,9 +158,10 @@ data_rename_2015 <- function(year, species, age, origin, river, file_type){
   return(new_df)
 }
 
-write_csv_2015 <- function(year, river, file_type){
+
+write_csv <- function(year, river, file_type){
   all_species = c("Chinook", "Coho", "Steelhead", "Chum", "Pink")
-  
+  all_origin = c("H","W")
   count = 0 
   for(species in all_species){
     
@@ -256,22 +173,18 @@ write_csv_2015 <- function(year, river, file_type){
     }
     
     for(age in ages){
-      if(species == "Coho" & age =="0+"){
-        all_origin = c("W")
-      }
-      else{
-        all_origin = c("H","W")
-      }
+      
       
       for(origin in all_origin){
         print(species)
         print(age)
         print(origin)
         if(count == 0){
-          new_df <- data_rename_2015(year, species, age, origin, river, file_type)
+          
+          new_df <- data_rename(year, species, age, origin, river, file_type)
         }
         else{
-          new_df1 <- data_rename_2015(year, species, age, origin, river, file_type)
+          new_df1 <- data_rename(year, species, age, origin, river, file_type)
           new_df = merge(x = new_df1, y = new_df, by = c("Down","In","Up","Date",
                                                          "Up_date","Down_time","Up_time",
                                                          "midpoint"),
@@ -292,10 +205,4 @@ write_csv_2015 <- function(year, river, file_type){
   
   
 }
-
-year = "2015"
-river = "Dungeness"
-file_type = ".accdb"
-
-
 
