@@ -425,6 +425,7 @@ pink_student_t <- fit(create_data(pink_data,
                       control = list(eval.max = 4000, iter.max = 5000, rel.tol = 1e-7)
 )
 plot_diagnostics(pink_student_t, logspace = FALSE)
+ggsave(here("..","..","output","pied_piper","dungeness_pink_phenomix.pdf"), plot = last_plot(), width = 15, height = 20)#, units = c("in", "cm", "mm"))
 
 #2020 not good. trying per hour data now
 #making plot for pinks for all years
@@ -498,7 +499,7 @@ cov_dat = data.frame(nyear = unique(pink_data$year))
 # rescale year -- could also standardize with scale()
 cov_dat$nyear = cov_dat$nyear - min(cov_dat$nyear) 
 
-pink_student_t <- fit(create_data(pink_data,
+pink_gnorm <- fit(create_data(pink_data,
                                   min_number=1, 
                                   variable = "number", 
                                   time="year", 
@@ -512,7 +513,7 @@ pink_student_t <- fit(create_data(pink_data,
                                   tail_model = "gnorm"),
                       control = list(eval.max = 4000, iter.max = 5000, rel.tol = 1e-7)
 )
-plot_diagnostics(pink_student_t, logspace = FALSE)
+plot_diagnostics(pink_gnorm, logspace = FALSE)
 # gnorm also has same problem
 #how about gaussian
 
@@ -646,8 +647,8 @@ cov_dat = data.frame(nyear = unique(chinook1_data$year))
 # rescale year -- could also standardize with scale()
 cov_dat$nyear = cov_dat$nyear - min(cov_dat$nyear) 
 
-chinook1_student_t <- fit(create_data(chinook1_data,
-                                  min_number=1, 
+chinook1_student_t_2 <- fit(create_data(chinook1_data,
+                                  min_number=0.1, 
                                   variable = "number", 
                                   time="year", 
                                   date = "doy",
@@ -660,4 +661,34 @@ chinook1_student_t <- fit(create_data(chinook1_data,
                                   tail_model = "student_t"),
                       control = list(eval.max = 4000, iter.max = 5000, rel.tol = 1e-7)
 )
-plot_diagnostics(coho_student_t, logspace = FALSE)
+plot_diagnostics(chinook1_student_t, logspace = FALSE)
+
+
+##chinook0
+
+chinook0_data <- data.frame(doy = dungeness_data$doy[dungeness_data$doy < 366 & dungeness_data$doy > 150],
+                            year = dungeness_data$year[dungeness_data$doy < 366 & dungeness_data$doy > 150],
+                            number = dungeness_data$chinook0_wild_num[dungeness_data$doy < 366 & dungeness_data$doy > 150])
+
+cov_dat = data.frame(nyear = unique(chinook0_data$year))
+# rescale year -- could also standardize with scale()
+cov_dat$nyear = cov_dat$nyear - min(cov_dat$nyear) 
+
+chinook0_student_t <- fit(create_data(chinook0_data,
+                                        min_number=0, 
+                                        variable = "number", 
+                                        time="year", 
+                                        date = "doy",
+                                        asymmetric_model = FALSE, 
+                                        mu = ~ nyear,
+                                        sigma = ~ nyear,
+                                        covar_data = cov_dat,
+                                        est_sigma_re = TRUE,
+                                        est_mu_re = TRUE,
+                                        tail_model = "student_t"),
+                            control = list(eval.max = 4000, iter.max = 5000, rel.tol = 1e-7)
+)
+plot_diagnostics(chinook0_student_t, logspace = FALSE)
+
+#pink
+
