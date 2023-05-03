@@ -300,6 +300,7 @@ set.seed(1)
 fitted_year = fit(datalist,
              control = list(eval.max = 5000, iter.max = 2000, rel.tol = 1e-8))
 
+extract_means(fitted_year) # this works!
 p_year <- plot_diagnostics(fitted_year, type="timing", logspace=TRUE)
 p_year <- p_year + ggtitle("Chinook subyearlings - Late spring")
 p_year
