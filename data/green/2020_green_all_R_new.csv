@@ -1,4 +1,4 @@
-"","start_datetime","end_datetime","In","midpoint","StartDate","EndDate","pink0_wild","chum0_mixed_num","steelheadsmolt_wild_num","steelheadsmolt_hatchery_num","coho1_mixed_num","coho0_wild_num","chinook1_wild_num","chinook1_hatchery_num","chinook0_wild_num","chinook0_hatchery_num"
+"","start_datetime","end_datetime","In","midpoint","StartDate","EndDate","pink0_wild_num","chum0_mixed_num","steelheadsmolt_wild_num","steelheadsmolt_hatchery_num","coho1_mixed_num","coho0_wild_num","chinook1_wild_num","chinook1_hatchery_num","chinook0_wild_num","chinook0_hatchery_num"
 "1",2020-01-16 14:00:00,2020-01-17 09:00:00,19,2020-01-16 23:30:00,2020-01-16,2020-01-17,1,0,0,0,7,0,0,0,2,0
 "2",2020-01-17 16:30:00,2020-01-18 08:00:00,15.5,2020-01-18 00:15:00,2020-01-17,2020-01-18,2,0,0,0,5,0,1,0,1,0
 "3",2020-01-18 08:00:00,2020-01-18 16:45:00,8.75,2020-01-18 12:22:30,2020-01-18,2020-01-18,0,0,0,0,0,0,0,0,3,0

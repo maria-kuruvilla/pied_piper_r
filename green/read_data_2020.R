@@ -170,8 +170,8 @@ write_csv <- function(year, river, file_type){
   print(file_name)
   #rename columns
   colnames(df_merge) <- c("start_datetime", "end_datetime", "In", "midpoint", "StartDate", "EndDate",
-                          "pink0_wild", "chum0_mixed_num", "steelheadsmolt_wild_num",
-                          "steelheadsmolt_hatchery_num","coho1_mixed_num","coho0_wild_num", 
+                          "pink0_wild_num", "chum0_mixed_num", "steelheadsmolt_wild_num",
+                          "steelheadsmolt_hatchery_num","coho1_mixed_num","coho0_wild_num",
                           "chinook1_wild_num", "chinook1_hatchery_num",  "chinook0_wild_num",
                           "chinook0_hatchery_num")
 
