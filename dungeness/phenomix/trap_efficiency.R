@@ -114,7 +114,8 @@ means_chinook0_perhour <- mutate(means_chinook0_perhour, type = "raw")
 means_chinook0 <- rbind(means_chinook0_perhour_estimate, means_chinook0_perhour)
 
 
-
+#save file
+write.csv(means_chinook0, here("data", "dungeness", "means_chinook0.csv"), row.names = FALSE)
 
 
 #use ggplot to plot the values of means_chinook0 by year, use different colors for type
@@ -127,5 +128,13 @@ ggplot(means_chinook0, aes(x = year, y = value, color = as.factor(type))) +
   theme(plot.title = element_text(hjust = 0.5))+
   scale_color_manual(values = c("#337a64", "#7b6b80"))
 
+predicted_values <- predict(fitted_year_chinook0_perhour_estimate_1_t)
 
-
+ggplot(predicted_values, aes(x = x, y = log(y))) +
+  geom_point(alpha = 0.5) +
+  geom_line(aes(x=x,y=log(pred))) +
+  facet_wrap(~years, ncol = 4, scales = 'free')+
+  labs(x = "doy", y = "Fish per hour")
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+#I dont think this is right
