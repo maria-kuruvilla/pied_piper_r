@@ -229,24 +229,30 @@ all_rivers %>%
 #use cowplot to combine the plots
 #filter for only chinook0 and coho1
 #add slategray vertical line at doy = 150 and 225
+#increase fontsize of title and y axis
 skagit_chinook_plot <- ggplot(skagit_agg %>% filter(species == "chinook0"), 
                       aes(x = doy, y = catch, group = year, color = origin)) +
   xlim(25,225)+
   geom_line(alpha = 0.2, linewidth = 1) +
   facet_grid(origin~species, scales = "free_y") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
+        axis.text.y = element_text(size = 14),
+        axis.title.x = element_text(size = 14),
+        title = element_text(size = 20))+
   scale_color_manual(values = c("cadetblue","salmon"))+
   labs(color = "Origin") +
-  theme(strip.background = element_blank(),
-        strip.text = element_blank())+
-  labs(subtitle = "Skagit River",
-       title = "",
+  labs(subtitle = "Skagit",
+       title = "\n",
        x = "Day of year",
        y = "")+
+  
+  theme(strip.background = element_blank(),
+        strip.text = element_blank())+
   theme(legend.position="none") +
   geom_vline(xintercept = 150, color = "slategray", linetype = "dashed") +
-  geom_vline(xintercept = 200, color = "slategray", linetype = "dashed")
+  geom_vline(xintercept = 189, color = "slategray", linetype = "dashed")+
+  scale_y_continuous(n.breaks = 3)
 
 skagit_coho_plot <- ggplot(skagit_agg %>% filter(species == "coho1"), 
                            aes(x = doy, y = catch, group = year, color = origin)) +
@@ -254,20 +260,24 @@ skagit_coho_plot <- ggplot(skagit_agg %>% filter(species == "coho1"),
   geom_line(alpha = 0.2, linewidth = 1) +
   facet_grid(origin~species, scales = "free_y") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size  =14),
+        axis.text.y = element_text(size = 14),
+        axis.title.x = element_text(size = 14),
+        title = element_text(size = 20))+
   scale_color_manual(values = c("cadetblue","salmon"))+
   labs(color = "Origin") +
   theme(strip.background = element_blank(),
         strip.text = element_text(size = 14),
         strip.text.x.top = element_blank()
         )+
-  labs(subtitle = "Skagit River",
-       title = "",
+  labs(subtitle = "Skagit",
+       title = "\n",
        x = "Day of year",
        y = "")+
   theme(legend.position="none") +
   geom_vline(xintercept = 100, color = "slategray", linetype = "dashed") +
-  geom_vline(xintercept = 150, color = "slategray", linetype = "dashed")
+  geom_vline(xintercept = 150, color = "slategray", linetype = "dashed")+
+  scale_y_continuous(n.breaks = 3)
 
 puyallup_chinook_plot <- ggplot(puyallup_agg %>% filter(species == "chinook0"), 
                                 aes(x = doy, y = catch, group = year, color = origin)) +
@@ -275,18 +285,22 @@ puyallup_chinook_plot <- ggplot(puyallup_agg %>% filter(species == "chinook0"),
   geom_line(alpha = 0.2, linewidth = 1) +
   facet_grid(origin~species, scales = "free_y") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
+        axis.text.y = element_text(size = 14),
+        axis.title.x = element_text(size = 14),
+        title = element_text(size = 20))+
   scale_color_manual(values = c("cadetblue","salmon"))+
   labs(color = "Origin") +
   theme(strip.background = element_blank(),
         strip.text = element_blank())+
-  labs(subtitle = "Puyallup River",
-       title = "",
+  labs(subtitle = "Puyallup",
+       title = "\n",
        x = "Day of year",
        y = "")+
   theme(legend.position="none") +
   geom_vline(xintercept = 130, color = "slategray", linetype = "dashed") +
-  geom_vline(xintercept = 200, color = "slategray", linetype = "dashed")
+  geom_vline(xintercept = 200, color = "slategray", linetype = "dashed") +
+  scale_y_continuous(n.breaks = 3)
 
 dungeness_chinook_plot <- ggplot(dungeness_agg %>% filter(species == "chinook0"), 
                                  aes(x = doy, y = catch, group = year, color = origin)) +
@@ -294,18 +308,23 @@ dungeness_chinook_plot <- ggplot(dungeness_agg %>% filter(species == "chinook0")
   geom_line(alpha = 0.2, linewidth = 1) +
   facet_grid(origin~species, scales = "free_y") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
+        axis.text.y = element_text(size = 14),
+        axis.title.x = element_text(size = 14),
+        title = element_text(size = 20))+
+        
   scale_color_manual(values = c("cadetblue","salmon"))+
   labs(color = "Origin") +
   theme(strip.background = element_blank(),
         strip.text = element_blank())+
-  labs(subtitle = "Dungeness River",
-       title = "Chinook subyearlings",
+  labs(subtitle = "Dungeness",
+       title = "Chinook\nsub yearlings",
        x = "Day of year",
        y = "Catch")+
   theme(legend.position="none") +
   geom_vline(xintercept = 130, color = "slategray", linetype = "dashed") +
-  geom_vline(xintercept = 200, color = "slategray", linetype = "dashed")
+  geom_vline(xintercept = 200, color = "slategray", linetype = "dashed") + 
+  scale_y_continuous(n.breaks = 3)
 
 
 dungeness_coho_plot <- ggplot(dungeness_agg %>% filter(species == "coho1"), 
@@ -314,18 +333,23 @@ dungeness_coho_plot <- ggplot(dungeness_agg %>% filter(species == "coho1"),
   geom_line(alpha = 0.2, linewidth = 1) +
   facet_grid(origin~species, scales = "free_y") +
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
+        axis.text.y = element_text(size = 14),
+        axis.title.x = element_text(size = 14),
+        title = element_text(size = 20)
+        )+
   scale_color_manual(values = c("cadetblue","salmon"))+
   labs(color = "Origin") +
   theme(strip.background = element_blank(),
         strip.text = element_blank())+
-  labs(subtitle = "Dungeness River",
-       title = "Coho yearlings",
+  labs(subtitle = "Dungeness",
+       title = "Coho\nyearlings",
        x = "Day of year",
        y = "")+
   theme(legend.position="none") +
   geom_vline(xintercept = 120, color = "slategray", linetype = "dashed") +
-  geom_vline(xintercept = 160, color = "slategray", linetype = "dashed")
+  geom_vline(xintercept = 160, color = "slategray", linetype = "dashed")+
+  scale_y_continuous(n.breaks = 3)
 
 #combine the plots
 
