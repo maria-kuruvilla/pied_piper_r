@@ -356,7 +356,7 @@ dungeness_coho_plot <- ggplot(dungeness_agg %>% filter(species == "coho1"),
 plot_grid(dungeness_chinook_plot, puyallup_chinook_plot,skagit_chinook_plot, 
           dungeness_coho_plot, skagit_coho_plot,  ncol = 5)
 
-ggsave(here("output","chinook_coho_plots.jpeg"), width = 12, height = 6)
+ggsave(here("output","chinook_coho_plots.jpeg"), width = 14.5, height = 8)
 
 puyallup_plot <- ggplot(puyallup_agg %>% filter(species == "chinook0"), 
                         aes(x = doy, y = catch, group = year)) +
