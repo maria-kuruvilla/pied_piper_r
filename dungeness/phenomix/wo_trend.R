@@ -39,3 +39,125 @@ means <- extract_means(fitted_year_chinook0_1_t)
 upper <- extract_upper(fitted_year_chinook0_1_t)
 lower <- extract_lower(fitted_year_chinook0_1_t)
 upper$value-lower$value
+
+
+
+datalist_chinook0_1_t = create_data(dplyr::filter(d, !is.na(chinook0_wild_num) & doy >= 120),
+                                    min_number=0, 
+                                    variable = "chinook0_wild_num",
+                                    time="year", 
+                                    date = "doy",
+                                    family = "negbin",
+                                    asymmetric_model = TRUE, 
+                                    # mu = ~ nyear,
+                                    # sigma = ~ nyear,
+                                    # covar_data = cov_dat,
+                                    # est_sigma_re = FALSE,
+                                    # est_mu_re = FALSE,
+                                    tail_model = "student_t")
+set.seed(1)
+fitted_year_chinook0_1_t = fit(datalist_chinook0_1_t,
+                               control = list(eval.max = 5000, iter.max = 2000, rel.tol = 1e-8))
+fitted_year_chinook0_1_t$pars$convergence
+#did not work
+
+
+datalist_chinook0_1_t = create_data(dplyr::filter(d, !is.na(chinook0_wild_num) & doy >= 120),
+                                    min_number=0, 
+                                    variable = "chinook0_wild_num",
+                                    time="year", 
+                                    date = "doy",
+                                    family = "negbin",
+                                    asymmetric_model = FALSE, 
+                                    # mu = ~ nyear,
+                                    # sigma = ~ nyear,
+                                    # covar_data = cov_dat,
+                                    # est_sigma_re = FALSE,
+                                    # est_mu_re = FALSE,
+                                    tail_model = "student_t")
+set.seed(1)
+fitted_year_chinook0_1_t = fit(datalist_chinook0_1_t,
+                               control = list(eval.max = 5000, iter.max = 2000, rel.tol = 1e-8))
+fitted_year_chinook0_1_t$pars$convergence
+#did not work
+
+datalist_chinook0_1_t = create_data(dplyr::filter(d, !is.na(chinook0_wild_num) & doy >= 120),
+                                    min_number=0, 
+                                    variable = "chinook0_wild_num",
+                                    time="year", 
+                                    date = "doy",
+                                    family = "negbin",
+                                    asymmetric_model = FALSE, 
+                                    # mu = ~ nyear,
+                                    # sigma = ~ nyear,
+                                    # covar_data = cov_dat,
+                                    # est_sigma_re = FALSE,
+                                    # est_mu_re = FALSE,
+                                    tail_model = "gnorm")
+set.seed(1)
+fitted_year_chinook0_1_t = fit(datalist_chinook0_1_t,
+                               control = list(eval.max = 5000, iter.max = 2000, rel.tol = 1e-8))
+fitted_year_chinook0_1_t$pars$convergence
+#did not work
+
+
+datalist_chinook0_1_t = create_data(dplyr::filter(d, !is.na(chinook0_wild_num) & doy >= 120),
+                                    min_number=0, 
+                                    variable = "chinook0_wild_num",
+                                    time="year", 
+                                    date = "doy",
+                                    # family = "negbin",
+                                    asymmetric_model = FALSE, 
+                                    # mu = ~ nyear,
+                                    # sigma = ~ nyear,
+                                    # covar_data = cov_dat,
+                                    # est_sigma_re = FALSE,
+                                    # est_mu_re = FALSE,
+                                    tail_model = "gnorm")
+set.seed(1)
+fitted_year_chinook0_1_t = fit(datalist_chinook0_1_t,
+                               control = list(eval.max = 5000, iter.max = 2000, rel.tol = 1e-8))
+fitted_year_chinook0_1_t$pars$convergence
+#did not work
+
+datalist_chinook0_1_t = create_data(dplyr::filter(d, !is.na(chinook0_wild_num) & doy >= 120),
+                                    min_number=0, 
+                                    variable = "chinook0_wild_num",
+                                    time="year", 
+                                    date = "doy")
+set.seed(1)
+fitted_year_chinook0_1_t = fit(datalist_chinook0_1_t,
+                               control = list(eval.max = 5000, iter.max = 2000, rel.tol = 1e-8))
+fitted_year_chinook0_1_t$pars$convergence
+#did not work
+
+#trying Eric's code
+
+datalist = create_data(dplyr::filter(d, !is.na(chinook0_wild_num)),
+                       min_number=0,
+                       variable = "chinook0_wild_num",
+                       time="year",
+                       date = "doy",
+                       family = "negbin",
+                       asymmetric_model = TRUE,
+                       est_sigma_re = FALSE,
+                       est_mu_re = TRUE,
+                       tail_model = "gaussian")
+set.seed(123)
+fitted = fit(datalist,
+             control = list(eval.max = 5000, iter.max = 2000, rel.tol = 1e-8))
+
+datalist = create_data(dplyr::filter(d, !is.na(chinook0_wild_num) & doy >= 120 & doy < 200),
+                       min_number=0,
+                       variable = "chinook0_wild_num",
+                       time="year",
+                       date = "doy",
+                       family = "negbin",
+                       asymmetric_model = TRUE,
+                       est_sigma_re = FALSE,
+                       est_mu_re = TRUE,
+                       tail_model = "gaussian")
+set.seed(1)
+fitted = fit(datalist,
+             control = list(eval.max = 5000, iter.max = 2000, rel.tol = 1e-8))
+
