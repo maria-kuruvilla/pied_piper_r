@@ -235,15 +235,17 @@ skagit_chinook_plot <- ggplot(skagit_agg %>% filter(species == "chinook0"),
   xlim(25,225)+
   geom_line(alpha = 0.2, linewidth = 1) +
   facet_grid(origin~species, scales = "free_y") +
-  theme_bw() +
+  theme_classic() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
         axis.text.y = element_text(size = 14),
-        axis.title.x = element_text(size = 14),
+        
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20),
         title = element_text(size = 20))+
   scale_color_manual(values = c("cadetblue","salmon"))+
   labs(color = "Origin") +
   labs(subtitle = "Skagit",
-       title = "\n",
+       title = " ",
        x = "Day of year",
        y = "")+
   
@@ -259,19 +261,21 @@ skagit_coho_plot <- ggplot(skagit_agg %>% filter(species == "coho1"),
   xlim(25,225)+
   geom_line(alpha = 0.2, linewidth = 1) +
   facet_grid(origin~species, scales = "free_y") +
-  theme_bw() +
+  theme_classic() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size  =14),
         axis.text.y = element_text(size = 14),
-        axis.title.x = element_text(size = 14),
+        
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20),
         title = element_text(size = 20))+
   scale_color_manual(values = c("cadetblue","salmon"))+
   labs(color = "Origin") +
   theme(strip.background = element_blank(),
-        strip.text = element_text(size = 14),
+        strip.text = element_text(size = 20),
         strip.text.x.top = element_blank()
         )+
   labs(subtitle = "Skagit",
-       title = "\n",
+       title = " ",
        x = "Day of year",
        y = "")+
   theme(legend.position="none") +
@@ -284,22 +288,24 @@ puyallup_chinook_plot <- ggplot(puyallup_agg %>% filter(species == "chinook0"),
   xlim(25,225)+
   geom_line(alpha = 0.2, linewidth = 1) +
   facet_grid(origin~species, scales = "free_y") +
-  theme_bw() +
+  theme_classic() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
         axis.text.y = element_text(size = 14),
-        axis.title.x = element_text(size = 14),
+        
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20),
         title = element_text(size = 20))+
   scale_color_manual(values = c("cadetblue","salmon"))+
   labs(color = "Origin") +
   theme(strip.background = element_blank(),
         strip.text = element_blank())+
   labs(subtitle = "Puyallup",
-       title = "\n",
+       title = " ",
        x = "Day of year",
        y = "")+
   theme(legend.position="none") +
   geom_vline(xintercept = 130, color = "slategray", linetype = "dashed") +
-  geom_vline(xintercept = 200, color = "slategray", linetype = "dashed") +
+  geom_vline(xintercept = 218, color = "slategray", linetype = "dashed") +
   scale_y_continuous(n.breaks = 3)
 
 dungeness_chinook_plot <- ggplot(dungeness_agg %>% filter(species == "chinook0"), 
@@ -307,10 +313,12 @@ dungeness_chinook_plot <- ggplot(dungeness_agg %>% filter(species == "chinook0")
   xlim(25,225)+
   geom_line(alpha = 0.2, linewidth = 1) +
   facet_grid(origin~species, scales = "free_y") +
-  theme_bw() +
+  theme_classic() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
         axis.text.y = element_text(size = 14),
-        axis.title.x = element_text(size = 14),
+        
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20),
         title = element_text(size = 20))+
         
   scale_color_manual(values = c("cadetblue","salmon"))+
@@ -318,7 +326,7 @@ dungeness_chinook_plot <- ggplot(dungeness_agg %>% filter(species == "chinook0")
   theme(strip.background = element_blank(),
         strip.text = element_blank())+
   labs(subtitle = "Dungeness",
-       title = "Chinook\nsub yearlings",
+       title = "Chinook",
        x = "Day of year",
        y = "Catch")+
   theme(legend.position="none") +
@@ -332,10 +340,11 @@ dungeness_coho_plot <- ggplot(dungeness_agg %>% filter(species == "coho1"),
   xlim(25,225)+
   geom_line(alpha = 0.2, linewidth = 1) +
   facet_grid(origin~species, scales = "free_y") +
-  theme_bw() +
+  theme_classic() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
         axis.text.y = element_text(size = 14),
-        axis.title.x = element_text(size = 14),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20),
         title = element_text(size = 20)
         )+
   scale_color_manual(values = c("cadetblue","salmon"))+
@@ -343,7 +352,7 @@ dungeness_coho_plot <- ggplot(dungeness_agg %>% filter(species == "coho1"),
   theme(strip.background = element_blank(),
         strip.text = element_blank())+
   labs(subtitle = "Dungeness",
-       title = "Coho\nyearlings",
+       title = "Coho",
        x = "Day of year",
        y = "")+
   theme(legend.position="none") +
@@ -351,10 +360,13 @@ dungeness_coho_plot <- ggplot(dungeness_agg %>% filter(species == "coho1"),
   geom_vline(xintercept = 160, color = "slategray", linetype = "dashed")+
   scale_y_continuous(n.breaks = 3)
 
-#combine the plots
+dungeness_coho_plot
 
+#combine the plots
+#give common x axis title
 plot_grid(dungeness_chinook_plot, puyallup_chinook_plot,skagit_chinook_plot, 
-          dungeness_coho_plot, skagit_coho_plot,  ncol = 5)
+          dungeness_coho_plot, skagit_coho_plot,  ncol = 5) 
+
 
 ggsave(here("output","chinook_coho_plots.jpeg"), width = 14.5, height = 8)
 
