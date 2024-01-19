@@ -1,4 +1,4 @@
-
+<<<<<<< HEAD
 #trying phenomix with est_mu and est_sigma = FALSE
 
 #load packages
@@ -343,3 +343,4 @@ upper <- extract_upper(fitted_year_chinook0_1_t)
 lower <- extract_lower(fitted_year_chinook0_1_t)
 upper$value-lower$value
 
+>>>>>>> d66512284322217344f7020d9952df15aa0b130b
