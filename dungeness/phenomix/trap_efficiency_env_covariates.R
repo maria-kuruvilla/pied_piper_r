@@ -101,4 +101,3 @@ ggplot(trap_efficiency, aes(y = chinook0_hatchery_perhour, x = doy)) +
   labs(y="Hatchery Chinook (per hour)", x="Day of Year") +
   theme_bw() +
   theme(text = element_text(size=20))
-
