@@ -285,9 +285,11 @@ skagit_coho_plot <- ggplot(skagit_agg %>% filter(species == "coho1"),
 
 puyallup_chinook_plot <- ggplot(puyallup_agg %>% filter(species == "chinook0"), 
                                 aes(x = doy, y = catch, group = year, color = origin)) +
-  xlim(25,225)+
+  xlim(25,225) +
+  
   geom_line(alpha = 0.2, linewidth = 1) +
   facet_grid(origin~species, scales = "free_y") +
+  scale_y_continuous(n.breaks = 3)+
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
         axis.text.y = element_text(size = 14),
@@ -305,8 +307,9 @@ puyallup_chinook_plot <- ggplot(puyallup_agg %>% filter(species == "chinook0"),
        y = "")+
   theme(legend.position="none") +
   geom_vline(xintercept = 130, color = "slategray", linetype = "dashed") +
-  geom_vline(xintercept = 218, color = "slategray", linetype = "dashed") +
-  scale_y_continuous(n.breaks = 3)
+  geom_vline(xintercept = 218, color = "slategray", linetype = "dashed")
+
+puyallup_chinook_plot
 
 dungeness_chinook_plot <- ggplot(dungeness_agg %>% filter(species == "chinook0"), 
                                  aes(x = doy, y = catch, group = year, color = origin)) +
@@ -333,7 +336,7 @@ dungeness_chinook_plot <- ggplot(dungeness_agg %>% filter(species == "chinook0")
   geom_vline(xintercept = 130, color = "slategray", linetype = "dashed") +
   geom_vline(xintercept = 200, color = "slategray", linetype = "dashed") + 
   scale_y_continuous(n.breaks = 3)
-
+dungeness_chinook_plot
 
 dungeness_coho_plot <- ggplot(dungeness_agg %>% filter(species == "coho1"), 
                               aes(x = doy, y = catch, group = year, color = origin)) +
