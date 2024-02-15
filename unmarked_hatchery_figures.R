@@ -5,6 +5,8 @@
 #unmarked hatchery salmon
 #add text with correlation coefficient to the plot
 
+## making change on Feb 14 2024 to have new puyallup rmis values
+
 library(here)
 library(dplyr)
 library(ggplot2)
@@ -19,7 +21,7 @@ dungeness_coho <- read.csv(here("data",
                                 "dungeness","unmarked_hatchery_coho_corrected.csv"),header=TRUE)
 
 puyallup_chinook <- read.csv(here("data",
-                                  "puyallup","unmarked_hatchery_chinook_corrected.csv"),header=TRUE)
+                                  "puyallup","unmarked_hatchery_chinook_corrected_new.csv"),header=TRUE)
 
 skagit_chinook <- read.csv(here("data",
                                  "skagit","unmarked_hatchery_chinook_corrected.csv"),header=TRUE)
@@ -108,8 +110,8 @@ chinook_p <- unmarked_hatchery %>%
   labs(x  = "Number of unmarked hatchery salmon", y = "Number of wild salmon", title = "Chinook") +
   theme_classic() +
   geom_text(data = correlations %>% filter(species == "chinook"), 
-            aes(0.7 * max_unmarked,
-                0.7 * max_wild,
+            aes(0.1 * max_unmarked,
+                0.9 * max_wild,
                 label = paste("r =",round(correlation,2)
                               )),
                 size = 7
@@ -124,7 +126,11 @@ chinook_p <- unmarked_hatchery %>%
         axis.text.x = element_text(angle = 45, hjust = 1, size = 14),
         axis.text.y = element_text(size = 14),
         title = element_text(size = 24)
-        )
+        ) +
+  #make x axis log scale and do not have scientific notation
+  scale_x_log10(labels = scales::label_number(accuracy = 1))
+
+chinook_p
 
 coho_p <- unmarked_hatchery %>%
   filter(species == "coho") %>%
@@ -134,8 +140,8 @@ coho_p <- unmarked_hatchery %>%
   labs(x  = "Number of unmarked hatchery salmon", y = "", title = "Coho") +
   theme_classic() +
   geom_text(data = correlations %>% filter(species == "coho"), 
-            aes(0.7 * max_unmarked,
-                0.7 * max_wild,
+            aes(0.4 * max_unmarked,
+                0.9 * max_wild,
                 label = paste("r =",round(correlation,2)
                               )),
             size = 7
@@ -150,13 +156,14 @@ coho_p <- unmarked_hatchery %>%
         axis.text.x = element_text(angle = 45, hjust = 1, size = 14),
         axis.text.y = element_text(size = 14),
         title = element_text(size = 24)
-        )
+        ) +
+  scale_x_log10(labels = scales::label_number(accuracy = 1))
 
 coho_p
 #combine the plots
 ggarrange(chinook_p, coho_p, ncol = 2, nrow = 1, common.legend = TRUE, legend = "bottom",
           widths = c(1.3,1), heights = c(1,1))
-ggsave(here("output","unmarked_wild_scatter.png"), width = 15, height = 5, units = "in")
+ggsave(here("output","unmarked_wild_scatter_new.png"), width = 15, height = 5, units = "in")
 
 
 
